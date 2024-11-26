@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Главная</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>  
+  <header>
+    <nav>
+      <a href="/">Главная</a>
+      <a href="/register" id="open-register-modal">Регистрация</a>
+      <a href="/login" id="open-login-modal">Вход</a>
+      <a href="/posts/create">Создать пост</a>
+    </nav>
+  </header>
+
+  <div id="pagination">
+    {% if current_page > 1 %}
+      <a href="/posts?page={{ current_page - 1 }}" class="pagination-link">Предыдущая</a>
+    {% endif %}
+    <span>Страница {{ current_page }} из {{ total_pages }}</span>
+    {% if total_pages > current_page %}
+      <a href="/posts?page={{ current_page + 1 }}" class="pagination-link">Следующая</a>
+    {% endif %}
+  </div>
+
+  <div id="posts-container">
+    {% for post in posts %}
+      <div class="post fade">
+        <h2>{{ post.title }}</h2>
+        <p>{{ post.content }}</p>
+      </div>
+    {% endfor %}
+  </div>
+
+  <button id="load-more">Загрузить еще посты</button>
+
+  <!-- Модальное окно для регистрации -->
+  <div id="register-modal" class="modal">
+    <div class="modal-content">
+      <h2>Регистрация</h2>
+      <form id="register-form" method="post">
+        <label for="username">Имя пользователя:</label>
+        <input type="text" id="username" name="username" required>
+        <label for="password">Пароль:</label>
+        <input type="password" id="password" name="password" required>
+        <button type="submit">Зарегистрироваться</button>
+      </form>
+      <button id="close-register-modal">Закрыть</button>
+    </div>
+  </div>
+
+  <!-- Модальное окно для входа -->
+  <div id="login-modal" class="modal">
+    <div class="modal-content">
+      <h2>Вход</h2>
+      <form id="login-form" method="post">
+        <label for="username">Имя пользователя:</label>
+        <input type="text" id="login-username" name="username" required>
+        <label for="password">Пароль:</label>
+        <input type="password" id="login-password" name="password" required>
+        <button type="submit">Войти</button>
+      </form>
+      <button id="close-login-modal">Закрыть</button>
+    </div>
+  </div>
+
+  <script src="/static/scripts.js"></script>
+</body>
+</html>

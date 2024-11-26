@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Посты</title>
+</head>
+<body>
+    <h1>Список постов</h1>
+    <ul>
+        {% for post in posts %}
+        <li>
+            <h2>{{ post.title }}</h2>
+            <p>{{ post.content }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <div>
+        <a href="/posts?page={{ page - 1 }}">Предыдущая страница</a>
+        <a href="/posts?page={{ page + 1 }}">Следующая страница</a>
+    </div>
+</body>
+</html>

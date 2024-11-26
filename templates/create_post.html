@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход</title>
+    <link rel="stylesheet" href="/static/styles.css">
+<h2>Создать пост</h2>
+</head>
+<form id="create-post-form" method="post" action="/posts/create">
+    <div>
+        <label for="title">Заголовок:</label>
+        <input type="text" id="title" name="title" placeholder="Введите заголовок" required>
+    </div>
+    <div>
+        <label for="content">Контент:</label>
+        <textarea id="content" name="content" placeholder="Введите текст поста" required></textarea>
+    </div>
+    <button type="submit">Создать</button>
+</form>
+
+<div id="message" style="margin-top: 20px; display: none;"></div>
+
+<script>
+    document.getElementById('create-post-form').addEventListener('submit', async function (event) {
+        event.preventDefault();
+        
+        const title = document.getElementById('title').value;
+        const content = document.getElementById('content').value;
+
+        const response = await fetch('/posts/create', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({ title, content })
+        });
+
+        if (response.ok) {
+            document.getElementById('message').style.display = 'block';
+            document.getElementById('message').textContent = 'Пост успешно создан!';
+            document.getElementById('create-post-form').reset();
+        } else {
+            document.getElementById('message').style.display = 'block';
+            document.getElementById('message').textContent = 'Ошибка при создании поста!';
+        }
+    });
+</script>
+
+<style>
+    form {
+        max-width: 600px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+    label {
+        font-weight: bold;
+    }
+    input, textarea, button {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    button {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #45a049;
+    }
+    #message {
+        text-align: center;
+        font-size: 16px;
+        color: green;
+    }
+</style>
+{% endblock %}
