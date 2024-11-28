@@ -10,8 +10,12 @@
   <header>
     <nav>
       <a href="/">Главная</a>
-      <a href="/register" id="open-register-modal">Регистрация</a>
-      <a href="/login" id="open-login-modal">Вход</a>
+      {% if current_user %}
+        <a href="/logout" id="logout">Выйти</a>
+      {% else %}
+        <a href="/register" id="open-register-modal">Регистрация</a>
+        <a href="/login" id="open-login-modal">Вход</a>
+      {% endif %}
       <a href="/posts/create">Создать пост</a>
     </nav>
   </header>
